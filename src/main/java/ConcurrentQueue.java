@@ -16,13 +16,17 @@ public class ConcurrentQueue<T> {
     }
 
     //offer
-    public synchronized boolean offer(T value){
-         return queue.offer(value);
+    public boolean offer(T value){
+        synchronized (queue){
+            return queue.offer(value);
+        }
     }
 
     //poll
     public T poll(){
-        return queue.poll();
+        synchronized (queue){
+            return queue.poll();
+        }
     }
 
     public T peek(){

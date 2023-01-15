@@ -15,14 +15,11 @@ class ConcurrentQueueTest {
 
         //when
         Thread t1 = new Thread(() -> {
-            System.out.println("thread1");
-
             for(int i=0; i<1000; i++){
                 cq.offer("test" + i);
             }
         });
         Thread t2 = new Thread(() -> {
-            System.out.println("thread2");
             for(int i=1000; i<2000; i++){
                 cq.offer("test" + i);
             }
@@ -32,19 +29,49 @@ class ConcurrentQueueTest {
         t2.start();
 
         try {
-            Thread.sleep(3000);
-            t1.interrupt();
-            t2.interrupt();
+            t1.join();
+            t2.join();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
         //then
-        System.out.println(cq.toString());
+        assertThat(cq.size()).isEqualTo(2000);
     }
 
     @Test
     void poll() {
+        //given
+        ConcurrentQueue<String> cq = new ConcurrentQueue<>();
+        for(int i=0; i<2000; i++) {
+            cq.offer("test"+ i);
+        }
+
+        //when
+        Thread t1 = new Thread(() -> {
+            for(int i=0; i<1000; i++){
+                cq.poll();
+            }
+        });
+        Thread t2 = new Thread(() -> {
+            for(int i=1000; i<2000; i++){
+                cq.poll();
+            }
+        });
+
+        t1.start();
+        t2.start();
+
+
+        try {
+            t1.join();
+            t2.join();
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        assertThat(cq.size()).isEqualTo(0);
     }
 
     @Test
