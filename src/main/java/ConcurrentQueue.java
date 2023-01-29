@@ -1,13 +1,10 @@
 import com.sun.source.tree.SynchronizedTree;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
-public class ConcurrentQueue<T> {
+public class ConcurrentQueue<T>{
 
     Queue<T> queue;
 
@@ -17,9 +14,9 @@ public class ConcurrentQueue<T> {
 
     //offer
     public boolean offer(T value){
-        synchronized (queue){
+//        synchronized (queue){
             return queue.offer(value);
-        }
+//        }
     }
 
     //poll
