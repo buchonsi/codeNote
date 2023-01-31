@@ -3,6 +3,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 public class Main {
+
     static Stack<String> stackInput = new Stack<>();
     static Stack<String> stackOuput = new Stack<>();
 
@@ -22,14 +23,8 @@ public class Main {
         for(int i=0; i<size; i++){
             System.out.println(cq.peek());
         }
-
-
         System.out.println(cq.poll());
 
         System.out.println(cq.toString());
-
-
     }
-
-
 }
